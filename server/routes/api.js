@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
   register,
+  login,
   listUser,
   editUser,
   deleteUser,
@@ -10,7 +11,9 @@ const {
 
 router.get("/auth", listUser);
 
-router.post("/auth", register);
+router.post("/register", register);
+
+router.post("/login", login);
 
 router.put("/auth", editUser);
 

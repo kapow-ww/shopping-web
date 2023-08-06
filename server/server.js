@@ -6,7 +6,12 @@ require("dotenv").config();
 
 const { readdirSync } = require("fs");
 
+const connectDB = require("./config/db");
+
 const app = express();
+
+//connect database
+connectDB();
 
 //middle
 app.use(morgan("dev"));
