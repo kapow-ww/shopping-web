@@ -42,13 +42,28 @@ exports.login = async (req, res) => {
         },
       };
 
-      jwt.sign(payload, "jwtSecret", { expiresIn: "3600" }, (err, token) => {
+      jwt.sign(payload, "jwtSecret", { expiresIn: "30m" }, (err, token) => {
         if (err) throw err;
         res.json({ token, payload });
       });
     } else {
       return res.status(400).send("User Not Found");
     }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+};
+
+exports.currentUser = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      username: req.user.username,
+    })
+      .select("-password")
+      .exec();
+
+    res.send(user);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
