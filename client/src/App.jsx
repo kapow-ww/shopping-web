@@ -1,13 +1,17 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 
 //pages
 import Register from "./components/pages/auth/Register";
 import Login from "./components/pages/auth/Login";
 import Home from "./components/pages/Home";
 
+//admin component
+import MenuBar from "./components/layouts/MenuBar";
+
 //admin pages
 import AdminHome from "./components/pages/admin/Home";
+import ManageAdmin from "./components/pages/admin/ManageAdmin";
 
 //user pages
 import UserHome from "./components/pages/user/Home";
@@ -22,6 +26,20 @@ import AdminRoute from "./components/routes/AdminRoute";
 import { currentUser } from "./components/functions/auth";
 
 import { useDispatch } from "react-redux";
+
+function AdminLayout() {
+  const adminMenu = [
+    { name: "หน้าแรก", link: "index" },
+    { name: "แดชบอร์ด", link: "dashboard" },
+    { name: "จัดการผู้ใช้งาน", link: "manage-admin" },
+  ];
+  return (
+    <div>
+      <MenuBar menus={adminMenu} />
+      <Outlet />
+    </div>
+  );
+}
 
 function App() {
   const dispatch = useDispatch();
@@ -53,13 +71,18 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         <Route
-          path="/admin/index"
+          path="admin"
           element={
             <AdminRoute>
-              <AdminHome />
+              <AdminLayout />
             </AdminRoute>
           }
-        />
+        >
+          <Route path="index" element={<AdminHome />} />
+          <Route path="dashboard" element={<h1>Dashboard</h1>} />
+          <Route path="manage-admin" element={<ManageAdmin />} />
+        </Route>
+
         <Route
           path="/user/index"
           element={
