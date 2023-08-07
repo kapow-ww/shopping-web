@@ -22,6 +22,7 @@ exports.readUsers = async (req, res) => {
   }
 };
 
+// ! unfinish
 exports.updateUsers = async (req, res) => {
   try {
     res.send("update users");
@@ -35,6 +36,19 @@ exports.removeUsers = async (req, res) => {
   try {
     const user = await User.findOneAndRemove({ _id: req.params.id });
     res.send(`${user.username} has removed`);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+};
+
+exports.changeStatus = async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.body.id },
+      { enabled: req.body.enabled }
+    );
+    res.send(`${user.username} has updated`);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
