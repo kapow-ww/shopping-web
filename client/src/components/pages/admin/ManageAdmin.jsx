@@ -19,6 +19,12 @@ const ManageAdmin = () => {
   const user = useSelector(selectUser);
 
   const handleOnChange = (e, _id) => {
+    //Update switch state
+    const newData = [...data];
+    const updateChecked = newData.find((user) => user._id === _id);
+    updateChecked.enabled = e;
+    setData(newData);
+
     const value = {
       id: _id,
       enabled: e,
@@ -46,7 +52,12 @@ const ManageAdmin = () => {
       key: "enabled",
       render: (_, { _id, enabled }) => {
         return (
-          <Switch checked={enabled} onChange={(e) => handleOnChange(e, _id)} />
+          <Switch
+            checked={enabled}
+            onChange={(e) => {
+              handleOnChange(e, _id);
+            }}
+          />
         );
       },
     },
