@@ -5,8 +5,8 @@ const MenuBar = ({ menus }) => {
   return (
     <div>
       <ul>
-        {menus.map((item) => (
-          <li>
+        {menus.map((item, index) => (
+          <li key={index}>
             <Link to={item.link}>{item.name}</Link>
           </li>
         ))}
