@@ -3,8 +3,15 @@ import { useSelector } from "react-redux";
 import ProtectRoute from "./ProtectRoute";
 import { currentAdmin } from "../functions/auth";
 
+import { createSelector } from "@reduxjs/toolkit";
+
+const selectUser = createSelector(
+  (state) => state.user,
+  (user) => user
+);
+
 const AdminRoute = ({ children }) => {
-  const { user } = useSelector((state) => ({ ...state }));
+  const user = useSelector(selectUser);
   const [ok, setOk] = useState(false);
 
   useEffect(() => {
