@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import { login } from "../../functions/auth";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import { Button, Checkbox, Form, Input, Card } from "antd";
+import { toast } from "react-toastify";
+
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+
+import { Typography } from "antd";
+const { Title } = Typography;
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [value, setValue] = useState({
-    username: "",
-    password: "",
-  });
+  // const [value, setValue] = useState({
+  //   username: "",
+  //   password: "",
+  // });
 
   const roleBaseRedirect = (role) => {
     if (role === "admin") {
@@ -24,11 +32,11 @@ const Login = () => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(value);
+  const onFinish = (values) => {
+    // e.preventDefault();
+    console.log(values);
 
-    login(value)
+    login(values)
       .then((res) => {
         dispatch({
           type: "LOGIN",
@@ -42,24 +50,83 @@ const Login = () => {
         localStorage.setItem("token", res.data.token);
 
         roleBaseRedirect(res.data.payload.user.role);
+        toast.success("เข้าสู่ระบบสำเร็จ");
       })
       .catch((err) => {
-        alert(err.response.data);
+        toast.error(err.response.data);
+        // alert(err.response.data);
       });
   };
 
   return (
-    <div>
-      <h1>Login page</h1>
-      <form onSubmit={handleSubmit}>
-        <label>Username</label>
-        <input type="text" name="username" onChange={handleChange} />
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "5%",
+      }}
+    >
+      <Card style={{ width: "60%" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Title level={2}>เข้าสู่ระบบ</Title>
+        </div>
 
-        <label>Password</label>
-        <input type="text" name="password" onChange={handleChange} />
+        <Form onFinish={onFinish} initialValues={{ remember: true }}>
+          <Form.Item
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: "Please input your username",
+              },
+            ]}
+          >
+            <Input
+              prefix={<UserOutlined />}
+              placeholder="ชื่อผู้ใช้งาน"
+              size="large"
+            />
+          </Form.Item>
 
-        <button>Submit</button>
-      </form>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined />}
+              placeholder="รหัสผ่าน"
+              size="large"
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <Form.Item name="remember" valuePropName="checked" noStyle>
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
+              เข้าสู่ระบบ
+            </Button>
+            {/* Don't have an account <Link to="/register">sign up</Link> */}
+            <div style={{ margin: "10px 0 10px 0", textAlign: "center" }}>
+              Don't have an account? <Link to="/register">Sign up</Link>
+            </div>
+          </Form.Item>
+        </Form>
+      </Card>
     </div>
   );
 };
