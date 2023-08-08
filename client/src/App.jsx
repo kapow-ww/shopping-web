@@ -27,6 +27,11 @@ import { currentUser } from "./components/functions/auth";
 
 import { useDispatch } from "react-redux";
 
+import { ToastContainer, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { ConfigProvider } from "antd";
+
 function AdminLayout() {
   const adminMenu = [
     { name: "หน้าแรก", link: "index" },
@@ -63,36 +68,67 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-
-        <Route
-          path="admin"
-          element={
-            <AdminRoute>
-              <AdminLayout />
-            </AdminRoute>
-          }
-        >
-          <Route path="index" element={<AdminHome />} />
-          <Route path="dashboard" element={<h1>Dashboard</h1>} />
-          <Route path="manage-admin" element={<ManageAdmin />} />
-        </Route>
-
-        <Route
-          path="/user/index"
-          element={
-            <UserRoute>
-              <UserHome />
-            </UserRoute>
-          }
+    <ConfigProvider
+      theme={{
+        token: {
+          fontFamily: "Prompt",
+          colorPrimary: "#292929",
+          fontSize: 14,
+          borderRadius: 0,
+          wireframe: true,
+        },
+        components: {
+          Select: {
+            colorText: "rgba(0, 0, 0, 0.88)",
+            colorIconHover: "rgba(0, 0, 0, 0.88)",
+            colorPrimaryHover: "#363636",
+            colorPrimary: "#292929",
+            colorWarningHover: "#ffd666",
+            colorTextDescription: "rgba(0, 0, 0, 0.45)",
+            colorTextTertiary: "rgba(0, 0, 0, 0.45)",
+            controlItemBgActive: "#D8D9DA",
+          },
+        },
+      }}
+    >
+      <div className="app">
+        <ToastContainer
+          position="bottom-right"
+          // theme="dark"
+          autoClose={2000}
+          hideProgressBar
+          transition={Slide}
         />
-      </Routes>
-    </div>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+
+          <Route
+            path="admin"
+            element={
+              <AdminRoute>
+                <AdminLayout />
+              </AdminRoute>
+            }
+          >
+            <Route path="index" element={<AdminHome />} />
+            <Route path="dashboard" element={<h1>Dashboard</h1>} />
+            <Route path="manage-admin" element={<ManageAdmin />} />
+          </Route>
+
+          <Route
+            path="/user/index"
+            element={
+              <UserRoute>
+                <UserHome />
+              </UserRoute>
+            }
+          />
+        </Routes>
+      </div>
+    </ConfigProvider>
   );
 }
 
