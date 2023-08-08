@@ -4,12 +4,13 @@ import {
   MailOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { Menu, Typography, Dropdown, Space, Button } from "antd";
+import { Typography, Dropdown, Drawer } from "antd";
 
 import {
   ShoppingCartOutlined,
   UserOutlined,
   LoginOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -110,11 +111,13 @@ const NonLogin = () => {
 };
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
+
   const user = useSelector(selectUser);
 
   return (
     <div className="navbar">
-      <ul className="links left">
+      {/* <ul className="links left">
         <li>
           <Link className="text-link texts">home</Link>
         </li>
@@ -124,8 +127,11 @@ const Navbar = () => {
         <li>
           <Link className="text-link texts">about</Link>
         </li>
-      </ul>
-      <p className="title">Shop</p>
+      </ul> */}
+      <>
+        <MenuOutlined onClick={() => setOpen(true)} />
+      </>
+      <p className="logo">Shop</p>
       <ul className="links right">
         <li>
           <Link className="text-link">
@@ -144,6 +150,16 @@ const Navbar = () => {
           )}
         </li>
       </ul>
+      <Drawer
+        title="Shop"
+        placement="left"
+        onClose={() => setOpen(false)}
+        open={open}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Drawer>
     </div>
   );
 };
