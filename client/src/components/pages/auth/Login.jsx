@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { login } from "../../functions/auth";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 const Login = () => {
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const [value, setValue] = useState({
