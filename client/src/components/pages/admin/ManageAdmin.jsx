@@ -79,7 +79,10 @@ const ManageAdmin = () => {
       role: e,
     };
     changeRole(user.token, value)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        loadData(user.token);
+      })
       .catch((err) => console.log(err));
   };
 
