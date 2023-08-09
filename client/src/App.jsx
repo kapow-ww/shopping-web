@@ -38,6 +38,9 @@ function AdminLayout() {
     { name: "แดชบอร์ด", link: "dashboard" },
     { name: "จัดการผู้ใช้งาน", link: "manage-admin" },
   ];
+  const onClick = (e) => {
+    console.log("click ", e);
+  };
   return (
     <div>
       <MenuBar menus={adminMenu} />

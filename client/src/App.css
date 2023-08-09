@@ -62,6 +62,33 @@ li{
     width: 100%;
 }
 
+.box-menu{
+    height: 100px;
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: inherit;
+}
+
+.box-menu:hover{
+    background-color: #292929;
+    color: aliceblue;
+}
+
+.box-menu .icon-menu{
+    font-size: 30px;
+}
+
+.footer-menu{
+    position: absolute;
+    bottom: 0;
+    left:0;
+    width: 100%;
+    text-align: center;
+}
+
 
 
 

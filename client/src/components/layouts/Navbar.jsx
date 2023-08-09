@@ -4,13 +4,15 @@ import {
   MailOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { Typography, Dropdown, Drawer } from "antd";
+import { Typography, Dropdown, Drawer, Col, Row, Button } from "antd";
 
 import {
   ShoppingCartOutlined,
   UserOutlined,
-  LoginOutlined,
   MenuOutlined,
+  HomeOutlined,
+  DashboardOutlined,
+  IdcardOutlined,
 } from "@ant-design/icons";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -110,6 +112,49 @@ const NonLogin = () => {
   );
 };
 
+const adminMenu = [
+  {
+    name: "หน้าแรก",
+    link: "admin/index",
+    icon: <HomeOutlined />,
+  },
+  { name: "แดชบอร์ด", link: "admin/dashboard", icon: <DashboardOutlined /> },
+  {
+    name: "จัดการผู้ใช้งาน",
+    link: "admin/manage-admin",
+    icon: <IdcardOutlined />,
+  },
+];
+
+const userMenu = [
+  { name: "หน้าแรก", link: "index" },
+  { name: "ร้านค้า", link: "shop" },
+  { name: "เกี่ยวกับ", link: "about" },
+];
+
+const generalMenu = [
+  { name: "หน้าแรก", link: "/" },
+  { name: "ร้านค้า", link: "dashboard" },
+  { name: "เกี่ยวกับ", link: "manage-admin" },
+  { name: "เข้าสู่ระบบ", link: "login" },
+  { name: "สมัครสมาชิก", link: "register" },
+];
+
+const BoxMenu = ({ menus, closeMenu }) => {
+  return (
+    <Row gutter={[8, 8]}>
+      {menus.map(({ name, link, icon }, index) => (
+        <Col span={12} key={index}>
+          <Link to={link} className="box-menu" onClick={closeMenu}>
+            <div className="icon-menu">{icon}</div>
+            {name}
+          </Link>
+        </Col>
+      ))}
+    </Row>
+  );
+};
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
@@ -117,21 +162,8 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      {/* <ul className="links left">
-        <li>
-          <Link className="text-link texts">home</Link>
-        </li>
-        <li>
-          <Link className="text-link texts">product</Link>
-        </li>
-        <li>
-          <Link className="text-link texts">about</Link>
-        </li>
-      </ul> */}
-      <>
-        <MenuOutlined onClick={() => setOpen(true)} />
-      </>
       <p className="logo">Shop</p>
+      <MenuOutlined onClick={() => setOpen(true)} />
       <ul className="links right">
         <li>
           <Link className="text-link">
@@ -150,15 +182,23 @@ const Navbar = () => {
           )}
         </li>
       </ul>
+
       <Drawer
         title="Shop"
         placement="left"
         onClose={() => setOpen(false)}
         open={open}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        {user ? (
+          user.role === "admin" ? (
+            <BoxMenu menus={adminMenu} closeMenu={() => setOpen(false)} />
+          ) : (
+            <BoxMenu menus={userMenu} closeMenu={() => setOpen(false)} />
+          )
+        ) : (
+          <BoxMenu menus={generalMenu} closeMenu={() => setOpen(false)} />
+        )}
+        <div className="footer-menu">@footer</div>
       </Drawer>
     </div>
   );

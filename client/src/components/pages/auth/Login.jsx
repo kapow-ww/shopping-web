@@ -3,10 +3,10 @@ import { login } from "../../functions/auth";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { Button, Checkbox, Form, Input, Card } from "antd";
+import { Button, Checkbox, Form, Input, Card, Spin } from "antd";
 import { toast } from "react-toastify";
 
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, UserOutlined, LoadingOutlined } from "@ant-design/icons";
 
 import { Typography } from "antd";
 const { Title } = Typography;
@@ -14,6 +14,8 @@ const { Title } = Typography;
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false);
 
   // const [value, setValue] = useState({
   //   username: "",
@@ -33,11 +35,10 @@ const Login = () => {
   };
 
   const onFinish = (values) => {
-    // e.preventDefault();
-    console.log(values);
-
+    setLoading(true);
     login(values)
       .then((res) => {
+        setLoading(false);
         dispatch({
           type: "LOGIN",
           payload: {
@@ -53,81 +54,87 @@ const Login = () => {
         toast.success("เข้าสู่ระบบสำเร็จ");
       })
       .catch((err) => {
+        setLoading(false);
         toast.error(err.response.data);
-        // alert(err.response.data);
       });
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: "5%",
-      }}
-    >
-      <Card style={{ width: "60%" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Title level={2}>เข้าสู่ระบบ</Title>
-        </div>
-
-        <Form onFinish={onFinish} initialValues={{ remember: true }}>
-          <Form.Item
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: "Please input your username",
-              },
-            ]}
+    <Spin spinning={loading} indicator={<LoadingOutlined />}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "5%",
+        }}
+      >
+        <Card style={{ width: "60%" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
-            <Input
-              prefix={<UserOutlined />}
-              placeholder="ชื่อผู้ใช้งาน"
-              size="large"
-            />
-          </Form.Item>
+            <Title level={2}>เข้าสู่ระบบ</Title>
+          </div>
 
-          <Form.Item
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            <Input.Password
-              prefix={<LockOutlined />}
-              placeholder="รหัสผ่าน"
-              size="large"
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
+          <Form onFinish={onFinish} initialValues={{ remember: true }}>
+            <Form.Item
+              name="username"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your username",
+                },
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined />}
+                placeholder="ชื่อผู้ใช้งาน"
+                size="large"
+              />
             </Form.Item>
-          </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
-              เข้าสู่ระบบ
-            </Button>
-            {/* Don't have an account <Link to="/register">sign up</Link> */}
-            <div style={{ margin: "10px 0 10px 0", textAlign: "center" }}>
-              Don't have an account? <Link to="/register">Sign up</Link>
-            </div>
-          </Form.Item>
-        </Form>
-      </Card>
-    </div>
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <Input.Password
+                prefix={<LockOutlined />}
+                placeholder="รหัสผ่าน"
+                size="large"
+              />
+            </Form.Item>
+
+            <Form.Item>
+              <Form.Item name="remember" valuePropName="checked" noStyle>
+                <Checkbox>Remember me</Checkbox>
+              </Form.Item>
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ width: "100%" }}
+              >
+                เข้าสู่ระบบ
+              </Button>
+              {/* Don't have an account <Link to="/register">sign up</Link> */}
+              <div style={{ margin: "10px 0 10px 0", textAlign: "center" }}>
+                Don't have an account? <Link to="/register">Sign up</Link>
+              </div>
+            </Form.Item>
+          </Form>
+        </Card>
+      </div>
+    </Spin>
   );
 };
 
