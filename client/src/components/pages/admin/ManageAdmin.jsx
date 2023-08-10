@@ -194,7 +194,7 @@ const ManageAdmin = () => {
         <Table columns={columns} dataSource={data} rowKey="_id"></Table>
       </div>
       <Modal
-        title="Basic Modal"
+        title="เปลี่ยนรหัสผ่าน"
         open={isModalOpen}
         onOk={handleModalOK}
         onCancel={() => setIsModalOpen(false)}

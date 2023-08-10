@@ -45,7 +45,7 @@ export const NavWrapper = styled.div`
 `;
 
 export const NavLink = styled(Link)`
-  color: black;
+  color: ${({ danger }) => (danger ? "red" : "black")};
   text-decoration: none;
   cursor: pointer;
 
