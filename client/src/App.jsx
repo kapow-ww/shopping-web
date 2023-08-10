@@ -1,18 +1,6 @@
 import React, { useState } from "react";
 import GlobalStyle from "./components/styles/Global.styled";
 
-//layouts
-import Navbar from "./components/layouts/Navbar";
-import MenuBar from "./components/layouts/MenuBar";
-import TopNavbar from "./components/layouts/TopNavbar";
-
-//general page
-import Login from "./components/pages/auth/Login";
-import Register from "./components/pages/auth/Register";
-
-//admin pages
-import ManageAdmin from "./components/pages/admin/ManageAdmin";
-
 //auth
 import { currentUser } from "./components/functions/auth";
 
@@ -29,6 +17,26 @@ import { ConfigProvider } from "antd";
 //router
 import { Outlet, Routes, Route } from "react-router-dom";
 
+//layouts
+import Navbar from "./components/layouts/Navbar";
+import MenuBar from "./components/layouts/MenuBar";
+import TopNavbar from "./components/layouts/TopNavbar";
+
+//general page
+import Login from "./components/pages/auth/Login";
+import Register from "./components/pages/auth/Register";
+
+//admin pages
+import ManageAdmin from "./components/pages/admin/ManageAdmin";
+import CreateCategory from "./components/pages/admin/category/CreateCategory";
+import UpdateCategory from "./components/pages/admin/category/UpdateCategory";
+
+//protect route
+import AdminRoute from "./components/routes/AdminRoute";
+
+//styled
+import { Container } from "./components/styles/Global.styled";
+
 const Layout = () => {
   return (
     <div>
@@ -44,19 +52,14 @@ const AdminLayout = () => {
         menus={[
           { name: "Dashboard", url: "/admin/dashboard" },
           { name: "Manage Account", url: "/admin/manage-admin" },
+          { name: "Manage Category", url: "/admin/create-category" },
         ]}
       />
-      <Outlet />
+      <Container>
+        <Outlet />
+      </Container>
     </div>
   );
-};
-
-const checkUser = (role) => {
-  if (role === "admin") {
-    return "admin";
-  } else if (role === "user") {
-    return "user";
-  }
 };
 
 const App = () => {
@@ -85,7 +88,6 @@ const App = () => {
     <ConfigProvider
       theme={{
         token: {
-          fontFamily: "Prompt",
           colorPrimary: "#292929",
           fontSize: 14,
           borderRadius: 0,
@@ -126,10 +128,19 @@ const App = () => {
           <Route path="what-new" element={<div>what-new</div>} />
         </Route>
 
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
+          }
+        >
           <Route path="index" element={<div>Home admin</div>} />
           <Route path="dashboard" element={<div>Home dashboard</div>} />
           <Route path="manage-admin" element={<ManageAdmin />} />
+          <Route path="create-category" element={<CreateCategory />} />
+          <Route path="update-category/:id" element={<UpdateCategory />} />
         </Route>
       </Routes>
     </ConfigProvider>
