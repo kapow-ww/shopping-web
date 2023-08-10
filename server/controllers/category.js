@@ -1,19 +1,59 @@
+const Category = require("../models/Category");
+
 exports.list = async (req, res) => {
-  res.send("get hello from category");
+  try {
+    const category = await Category.find({}).exec();
+    res.send(category);
+  } catch (err) {
+    res.status(500).send("Server Error!");
+  }
 };
 
 exports.create = async (req, res) => {
-  res.send("create category");
+  try {
+    const { name } = req.body;
+
+    const category = await new Category({ name }).save();
+    res.send(category);
+  } catch (err) {
+    res.status(500).send("Server Error!");
+  }
 };
 
 exports.read = async (req, res) => {
-  res.send("Read category by id");
+  try {
+    const category = await Category.findOne({ _id: req.params.id }).exec();
+
+    res.send(category);
+  } catch (err) {
+    res.status(500).send("Server Error!");
+  }
 };
 
 exports.update = async (req, res) => {
-  res.send("Edit category by id");
+  try {
+    const { name } = req.body;
+    const category = await Category.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { name: name }
+    ).exec();
+
+    res.send(category);
+  } catch (err) {
+    res.status(500).send("Server Error!");
+  }
 };
 
 exports.remove = async (req, res) => {
-  res.send("Delete category by id");
+  try {
+    const category = await Category.findOneAndDelete({
+      _id: req.params.id,
+    }).exec();
+
+    res.send(`Delete ${category.name} category`);
+  } catch (err) {
+    res.status(500).send("Server Error!");
+  }
 };
