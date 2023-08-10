@@ -14,7 +14,7 @@ exports.create = async (req, res) => {
     const { name } = req.body;
 
     const category = await new Category({ name }).save();
-    res.send(category);
+    res.send(`สร้างหมวดหมู่ ${category.name} เรียบร้อย`);
   } catch (err) {
     res.status(500).send("Server Error!");
   }
@@ -40,7 +40,7 @@ exports.update = async (req, res) => {
       { name: name }
     ).exec();
 
-    res.send(category);
+    res.send("อัพเดตหมวดหมู่เรียบร้อย");
   } catch (err) {
     res.status(500).send("Server Error!");
   }

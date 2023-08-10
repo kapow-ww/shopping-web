@@ -33,7 +33,7 @@ exports.updateUsers = async (req, res) => {
       { _id: id },
       { password: newPassword }
     );
-    res.send(`${user.username} has a password updated`);
+    res.send(`อัพเดตเรียบร้อย`);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -43,7 +43,7 @@ exports.updateUsers = async (req, res) => {
 exports.removeUsers = async (req, res) => {
   try {
     const user = await User.findOneAndRemove({ _id: req.params.id });
-    res.send(`${user.username} has removed`);
+    res.send(`ลบ ${user.username} เรียบร้อย`);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -56,7 +56,7 @@ exports.changeStatus = async (req, res) => {
       { _id: req.body.id },
       { enabled: req.body.enabled }
     );
-    res.send(`${user.username} has a status updated`);
+    res.send(`อัพเดตเรียบร้อย`);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -69,7 +69,7 @@ exports.changeRole = async (req, res) => {
       { _id: req.body.id },
       { role: req.body.role }
     );
-    res.send(`${user.username} has a role updated`);
+    res.send(`อัพเดตเรียบร้อย`);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
