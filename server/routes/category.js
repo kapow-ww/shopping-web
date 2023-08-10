@@ -10,14 +10,14 @@ const {
 
 const { tokenVerify, adminCheck } = require("../middleware/auth");
 
-router.get("/category", list);
+router.get("/category", tokenVerify, adminCheck, list);
 
-router.post("/category", create);
+router.post("/category", tokenVerify, adminCheck, create);
 
-router.get("/category/:id", read);
+router.get("/category/:id", tokenVerify, adminCheck, read);
 
-router.put("/category/:id", update);
+router.put("/category/:id", tokenVerify, adminCheck, update);
 
-router.delete("/category/:id", remove);
+router.delete("/category/:id", tokenVerify, adminCheck, remove);
 
 module.exports = router;
