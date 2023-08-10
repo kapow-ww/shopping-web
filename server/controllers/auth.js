@@ -9,7 +9,7 @@ exports.register = async (req, res) => {
 
     console.log(user);
     if (user) {
-      return res.status(400).send("User Already exists");
+      return res.status(400).send("ชื่อผู้ใช้งานนี้ถูกใช้งานแล้ว");
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -18,7 +18,7 @@ exports.register = async (req, res) => {
     user.password = await bcrypt.hash(password, salt);
     await user.save();
 
-    res.send("Register success");
+    res.send("สมัครสมาชิกเสร็จสิ้น");
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -32,7 +32,7 @@ exports.login = async (req, res) => {
     if (user && user.enabled) {
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).send("Password Invalid");
+        return res.status(400).send("รหัสผ่านไม่ถูกต้อง");
       }
 
       const payload = {
@@ -47,7 +47,7 @@ exports.login = async (req, res) => {
         res.json({ token, payload });
       });
     } else {
-      return res.status(400).send("User Not Found");
+      return res.status(400).send("ไม่พบผู้ใช้งานนี้");
     }
   } catch (err) {
     console.log(err);
@@ -70,18 +70,9 @@ exports.currentUser = async (req, res) => {
   }
 };
 
-exports.listUser = async (req, res) => {
-  try {
-    res.send("List get user");
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Server Error!");
-  }
-};
-
 exports.editUser = async (req, res) => {
   try {
-    res.send("Edit user");
+    res.send("อัพเดตผู้ใช้งานเรียบร้อย");
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -90,7 +81,7 @@ exports.editUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    res.send("remove user");
+    res.send("ลบผู้ใช้งานเรียบร้อย");
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
