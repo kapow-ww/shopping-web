@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 
 //functions
 import {
@@ -17,6 +16,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import moment from "moment/min/moment-with-locales";
 
 import { selectUser } from "../../reducers";
+import { useSelector } from "react-redux";
 
 const roleOptions = [
   {
