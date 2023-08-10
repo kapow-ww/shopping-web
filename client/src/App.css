@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');* {
+/* @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -28,7 +28,6 @@ li{
     justify-content: space-between;
     align-items: center;
     height: 100px;
-    /* padding: 0 20px 0 20px; */
 }
 
 .navbar .links{
@@ -93,4 +92,4 @@ li{
 
 
 
-
+ */
