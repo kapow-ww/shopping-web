@@ -20,6 +20,7 @@ exports.createImage = async (req, res) => {
 
 exports.removeImage = async (req, res) => {
   try {
+    console.log(req.body);
     let image_id = req.body.public_id;
     cloudinary.uploader.destroy(image_id, (result) => {
       res.send(result);

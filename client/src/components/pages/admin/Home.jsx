@@ -45,6 +45,8 @@ const Home = () => {
     }
   };
 
+  console.log(products);
+
   return (
     <div>
       <h1>Home Admin</h1>

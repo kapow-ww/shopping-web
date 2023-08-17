@@ -16,7 +16,7 @@ const ProductCard = ({ product, handleRemove }) => {
         // </Carousel>
         <img
           style={{ height: "150px", objectFit: "cover" }}
-          src={images && images.length ? images[0].url : ""}
+          src={images && images.length ? images[0].response.url : ""}
         />
       }
       actions={[

@@ -16,6 +16,7 @@ const intialstate = {
   description: "",
   category: [],
   price: 0,
+  images: [],
   quantity: 0,
 };
 
@@ -38,49 +39,6 @@ const CreateProduct = () => {
     return e?.fileList;
   };
 
-  const dummyRequest = ({ onSuccess }) => {
-    setTimeout(() => {
-      onSuccess("ok");
-    }, 0);
-  };
-
-  const handleUpload = async (images) => {
-    const allfileUpload = await Promise.all(
-      images.map(async (file) => {
-        return new Promise((resolve) => {
-          Resizer.imageFileResizer(
-            file.originFileObj,
-            720,
-            720,
-            "JPEG",
-            100,
-            0,
-            (uri) =>
-              axios
-                .post(
-                  import.meta.env.VITE_SERVER_API + "/images",
-                  {
-                    image: uri,
-                  },
-                  {
-                    headers: {
-                      authtoken: user.token,
-                    },
-                  }
-                )
-                .then((res) => {
-                  resolve(res.data);
-                })
-                .catch((err) => console.log(err)),
-            "base64"
-          );
-        });
-      })
-    );
-
-    return allfileUpload;
-  };
-
   const loadCategory = () => {
     listCategory(user.token)
       .then((res) => {
@@ -91,7 +49,6 @@ const CreateProduct = () => {
 
   const handleCreateProduct = async (values) => {
     setLoading(true);
-    values.images = await handleUpload(values.images);
     AddProduct(user.token, values)
       .then((res) => {
         setLoading(false);
@@ -103,13 +60,66 @@ const CreateProduct = () => {
         console.log(err);
         toast.error(`เพิ่มสินค้าไม่สำเร็จ`);
       });
+    console.log(images);
     console.log(values);
   };
 
-  const uploadImage = ({ onSuccess }) => {
-    setTimeout(() => {
-      onSuccess("ok");
-    }, 0);
+  const uploadFile = (e) => {
+    const file = e.file;
+    Resizer.imageFileResizer(
+      file,
+      720,
+      720,
+      "JPEG",
+      100,
+      0,
+      (uri) => {
+        axios
+          .post(
+            import.meta.env.VITE_SERVER_API + "/images",
+            {
+              image: uri,
+            },
+            {
+              headers: {
+                authtoken: user.token,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res);
+            e.onSuccess(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+            e.onError(err);
+          });
+      },
+      "base64"
+    );
+  };
+
+  const removeImage = (e) => {
+    const public_id = e.response.public_id;
+    console.log(public_id);
+    axios
+      .post(
+        import.meta.env.VITE_SERVER_API + "/remove-image",
+        {
+          public_id: public_id,
+        },
+        {
+          headers: {
+            authtoken: user.token,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -183,26 +193,19 @@ const CreateProduct = () => {
 
         <Form.Item
           name="images"
-          label="upload"
+          label="Upload"
           valuePropName="fileList"
           getValueFromEvent={normFile}
         >
-          <Upload.Dragger
-            customRequest={dummyRequest}
-            listType="picture"
+          <Upload
+            customRequest={uploadFile}
+            onRemove={removeImage}
             multiple
+            listType="picture"
           >
-            <Button loading={loading}>
-              <UploadOutlined /> Click to upload
-            </Button>
-          </Upload.Dragger>
+            <Button icon={<UploadOutlined />}>Click to upload</Button>
+          </Upload>
         </Form.Item>
-
-        {/* <Upload.Dragger customRequest={uploadImage} listType="picture" multiple>
-          <Button>
-            <UploadOutlined /> Click to upload
-          </Button>
-        </Upload.Dragger> */}
 
         <Form.Item>
           {/* <Button htmlType="submit">Create</Button> */}
