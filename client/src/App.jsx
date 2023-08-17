@@ -27,15 +27,19 @@ import Login from "./components/pages/auth/Login";
 import Register from "./components/pages/auth/Register";
 
 //admin pages
+import Home from "./components/pages/admin/Home";
 import ManageAdmin from "./components/pages/admin/ManageAdmin";
 import CreateCategory from "./components/pages/admin/category/CreateCategory";
 import UpdateCategory from "./components/pages/admin/category/UpdateCategory";
+import CreateProduct from "./components/pages/admin/product/CreateProduct";
+import UpdateProduct from "./components/pages/admin/product/UpdateProduct";
 
 //protect route
 import AdminRoute from "./components/routes/AdminRoute";
 
 //styled
 import { Container } from "./components/styles/Global.styled";
+import { themeConfig } from "./theme";
 
 const Layout = () => {
   return (
@@ -50,9 +54,11 @@ const AdminLayout = () => {
     <div>
       <MenuBar
         menus={[
+          { name: "Home", url: "/admin/index" },
           { name: "Dashboard", url: "/admin/dashboard" },
           { name: "Manage Account", url: "/admin/manage-admin" },
           { name: "Manage Category", url: "/admin/create-category" },
+          { name: "Manage Product", url: "/admin/create-product" },
         ]}
       />
       <Container>
@@ -85,28 +91,7 @@ const App = () => {
   }
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: "#292929",
-          fontSize: 14,
-          borderRadius: 0,
-          wireframe: true,
-        },
-        components: {
-          Select: {
-            colorText: "rgba(0, 0, 0, 0.88)",
-            colorIconHover: "rgba(0, 0, 0, 0.88)",
-            colorPrimaryHover: "#363636",
-            colorPrimary: "#292929",
-            colorWarningHover: "#ffd666",
-            colorTextDescription: "rgba(0, 0, 0, 0.45)",
-            colorTextTertiary: "rgba(0, 0, 0, 0.45)",
-            controlItemBgActive: "#D8D9DA",
-          },
-        },
-      }}
-    >
+    <ConfigProvider theme={themeConfig}>
       <ToastContainer
         position="bottom-right"
         // theme="dark"
@@ -136,11 +121,13 @@ const App = () => {
             </AdminRoute>
           }
         >
-          <Route path="index" element={<div>Home admin</div>} />
+          <Route path="index" element={<Home />} />
           <Route path="dashboard" element={<div>Home dashboard</div>} />
           <Route path="manage-admin" element={<ManageAdmin />} />
           <Route path="create-category" element={<CreateCategory />} />
           <Route path="update-category/:id" element={<UpdateCategory />} />
+          <Route path="create-product" element={<CreateProduct />} />
+          <Route path="update-product/:id" element={<UpdateProduct />} />
         </Route>
       </Routes>
     </ConfigProvider>
