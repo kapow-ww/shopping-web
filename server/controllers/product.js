@@ -23,6 +23,21 @@ exports.list = async (req, res) => {
   }
 };
 
+exports.listBy = async (req, res) => {
+  try {
+    const { sort, order, limit } = req.body;
+    const count = parseInt(req.params.count);
+    console.log(count);
+    const product = await Product.find()
+      .limit(limit)
+      .sort([[sort, order]])
+      .populate("category");
+    res.send(product);
+  } catch (err) {
+    res.status(500).send("Server Error!");
+  }
+};
+
 exports.remove = async (req, res) => {
   try {
     const deleted = await Product.findOneAndRemove({

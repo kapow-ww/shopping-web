@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../reducers";
 
 import { listProduct, removeProduct } from "../../functions/product";
-import ProductCard from "../../ui/ProductCard";
+import AdminProductCard from "../../ui/AdminProductCard";
 
-import { Col, Row } from "antd";
+import { Col, Row, List } from "antd";
 
 import { toast } from "react-toastify";
 
@@ -17,7 +17,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    loadProduct(5);
+    loadProduct(10);
   }, []);
 
   const loadProduct = (count) => {
@@ -45,8 +45,6 @@ const Home = () => {
     }
   };
 
-  console.log(products);
-
   return (
     <div>
       <h1>Home Admin</h1>
@@ -54,17 +52,27 @@ const Home = () => {
         {loading ? (
           <>...loading</>
         ) : (
-          <Row gutter={[16, 16]} justify="space-between">
-            {products.map((product, index) => (
-              <Col span={8} key={index}>
-                <ProductCard product={product} handleRemove={handleRemove} />
-              </Col>
-            ))}
-          </Row>
+          <List
+            grid={{
+              gutter: 16,
+              xs: 1,
+              sm: 2,
+              md: 4,
+              lg: 4,
+              xl: 6,
+              xxl: 3,
+            }}
+            dataSource={products}
+            renderItem={(item) => (
+              <List.Item>
+                <AdminProductCard product={item} handleRemove={handleRemove} />
+              </List.Item>
+            )}
+          ></List>
         )}
       </div>
 
-      <pre>{JSON.stringify(products, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(products, null, 2)}</pre> */}
     </div>
   );
 };

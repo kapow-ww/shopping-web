@@ -7,6 +7,7 @@ const {
   remove,
   read,
   update,
+  listBy,
 } = require("../controllers/product");
 
 const { tokenVerify, adminCheck } = require("../middleware/auth");
@@ -15,11 +16,13 @@ const { tokenVerify, adminCheck } = require("../middleware/auth");
 
 router.post("/product", tokenVerify, adminCheck, create);
 
-router.get("/product/:count", list);
+router.get("/products/:count", list);
+
+router.post("/productby/", listBy);
 
 router.delete("/product/:id", tokenVerify, adminCheck, remove);
 
-router.get("/products/:id", read);
+router.get("/product/:id", read);
 
 router.put("/product/:id", tokenVerify, adminCheck, update);
 

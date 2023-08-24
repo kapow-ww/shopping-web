@@ -54,6 +54,7 @@ const CreateProduct = () => {
         setLoading(false);
         console.log(res);
         toast.success(`เพิ่มสินค้า ${values.title} สำเร็จ`);
+        form.resetFields();
       })
       .catch((err) => {
         setLoading(false);

@@ -23,11 +23,13 @@ import MenuBar from "./components/layouts/MenuBar";
 import TopNavbar from "./components/layouts/TopNavbar";
 
 //general page
+import Home from "./components/pages/Home/Home";
 import Login from "./components/pages/auth/Login";
 import Register from "./components/pages/auth/Register";
+import SingleProduct from "./components/pages/product/SingleProduct";
 
 //admin pages
-import Home from "./components/pages/admin/Home";
+import HomeAdmin from "./components/pages/admin/Home";
 import ManageAdmin from "./components/pages/admin/ManageAdmin";
 import CreateCategory from "./components/pages/admin/category/CreateCategory";
 import UpdateCategory from "./components/pages/admin/category/UpdateCategory";
@@ -41,13 +43,30 @@ import AdminRoute from "./components/routes/AdminRoute";
 import { Container } from "./components/styles/Global.styled";
 import { themeConfig } from "./theme";
 
-const Layout = () => {
+import { Layout, Space } from "antd";
+const { Header, Footer, Sider, Content } = Layout;
+
+const Layouts = () => {
   return (
     <div>
-      <Outlet />
+      <Container>
+        <Outlet />
+      </Container>
     </div>
   );
 };
+
+// const Layouts = () => {
+//   return (
+//     <Layout>
+//       <Header>asd</Header>
+//       <Content>
+//         <Outlet></Outlet>
+//       </Content>
+//       <Footer>asd</Footer>
+//     </Layout>
+//   );
+// };
 
 const AdminLayout = () => {
   return (
@@ -104,10 +123,12 @@ const App = () => {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="home" element={<div>Home</div>} />
+        {/* <Route path="/" element={<Layout />}> */}
+        <Route path="/" element={<Layouts />}>
+          <Route path="" element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="product/:id" element={<SingleProduct />} />
           <Route path="cart" element={<div>cart</div>} />
           <Route path="deal" element={<div>deals</div>} />
           <Route path="what-new" element={<div>what-new</div>} />
@@ -121,7 +142,7 @@ const App = () => {
             </AdminRoute>
           }
         >
-          <Route path="index" element={<Home />} />
+          <Route path="index" element={<HomeAdmin />} />
           <Route path="dashboard" element={<div>Home dashboard</div>} />
           <Route path="manage-admin" element={<ManageAdmin />} />
           <Route path="create-category" element={<CreateCategory />} />

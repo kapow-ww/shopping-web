@@ -7,7 +7,17 @@ export const AddProduct = async (authtoken, value) => {
 };
 
 export const listProduct = async (count) => {
-  return await axios.get(import.meta.env.VITE_SERVER_API + `/product/${count}`);
+  return await axios.get(
+    import.meta.env.VITE_SERVER_API + `/products/${count}`
+  );
+};
+
+export const listProductBy = async (sort, order, limit) => {
+  return await axios.post(import.meta.env.VITE_SERVER_API + `/productby`, {
+    sort,
+    order,
+    limit,
+  });
 };
 
 export const removeProduct = async (authtoken, id) => {
@@ -20,7 +30,7 @@ export const removeProduct = async (authtoken, id) => {
 };
 
 export const readProduct = async (id) => {
-  return await axios.get(import.meta.env.VITE_SERVER_API + `/products/${id}`);
+  return await axios.get(import.meta.env.VITE_SERVER_API + `/product/${id}`);
 };
 
 export const updateProduct = async (authtoken, id, product) => {

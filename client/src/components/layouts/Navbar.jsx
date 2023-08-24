@@ -31,7 +31,7 @@ const Navbar = () => {
   return (
     <Nav>
       <NavContainer>
-        <NavLogo to="/home">SHOP</NavLogo>
+        <NavLogo to="/">SHOP</NavLogo>
 
         <MobileNav onClick={handleOpenNav}>
           {openNav ? <BiChevronDown /> : <BiMenu />}
