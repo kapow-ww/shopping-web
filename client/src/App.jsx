@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import GlobalStyle from "./components/styles/Global.styled";
-
+import "./App.css";
 //auth
 import { currentUser } from "./components/functions/auth";
 
@@ -48,42 +47,38 @@ const { Header, Footer, Sider, Content } = Layout;
 
 const Layouts = () => {
   return (
-    <div>
-      <Container>
+    <Layout>
+      <Header>
+        <Navbar />
+      </Header>
+      <Content>
         <Outlet />
-      </Container>
-    </div>
+      </Content>
+      <Footer>asd</Footer>
+    </Layout>
   );
 };
 
-// const Layouts = () => {
-//   return (
-//     <Layout>
-//       <Header>asd</Header>
-//       <Content>
-//         <Outlet></Outlet>
-//       </Content>
-//       <Footer>asd</Footer>
-//     </Layout>
-//   );
-// };
-
 const AdminLayout = () => {
   return (
-    <div>
-      <MenuBar
-        menus={[
-          { name: "Home", url: "/admin/index" },
-          { name: "Dashboard", url: "/admin/dashboard" },
-          { name: "Manage Account", url: "/admin/manage-admin" },
-          { name: "Manage Category", url: "/admin/create-category" },
-          { name: "Manage Product", url: "/admin/create-product" },
-        ]}
-      />
-      <Container>
+    <Layout>
+      <Header>
+        <Navbar />
+        <MenuBar
+          menus={[
+            { name: "Home", url: "/admin/index" },
+            { name: "Dashboard", url: "/admin/dashboard" },
+            { name: "Manage Account", url: "/admin/manage-admin" },
+            { name: "Manage Category", url: "/admin/create-category" },
+            { name: "Manage Product", url: "/admin/create-product" },
+          ]}
+        />
+      </Header>
+      <Content>
         <Outlet />
-      </Container>
-    </div>
+      </Content>
+      <Footer>asd</Footer>
+    </Layout>
   );
 };
 
@@ -110,7 +105,8 @@ const App = () => {
   }
 
   return (
-    <ConfigProvider theme={themeConfig}>
+    <ConfigProvider>
+      {/* <ConfigProvider theme={themeConfig}> */}
       <ToastContainer
         position="bottom-right"
         // theme="dark"
@@ -118,9 +114,6 @@ const App = () => {
         hideProgressBar
         transition={Slide}
       />
-      <GlobalStyle />
-      {/* <TopNavbar /> */}
-      <Navbar />
 
       <Routes>
         {/* <Route path="/" element={<Layout />}> */}

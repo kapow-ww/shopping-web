@@ -4,6 +4,7 @@ export const themeConfig = {
     fontSize: 14,
     borderRadius: 0,
     wireframe: true,
+    colorInfo: "#292929",
   },
   components: {
     Select: {

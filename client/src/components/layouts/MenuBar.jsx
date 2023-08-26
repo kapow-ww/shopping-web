@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Menu, MenuContainer, MenuItem, Item } from "../styles/MenuBar.styled";
 
 const MenuBar = ({ menus }) => {
@@ -9,9 +9,9 @@ const MenuBar = ({ menus }) => {
         <MenuItem>
           {menus.map((item, index) => (
             <Item key={index}>
-              <Link to={item.url} className="link">
+              <NavLink to={item.url} className="link">
                 {item.name}
-              </Link>
+              </NavLink>
             </Item>
           ))}
         </MenuItem>

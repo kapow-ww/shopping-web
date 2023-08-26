@@ -12,36 +12,6 @@ const { Title } = Typography;
 import { Link } from "react-router-dom";
 const Register = () => {
   const [loading, setLoading] = useState(false);
-  // const [value, setValue] = useState({
-  //   username: "",
-  //   password: "",
-  //   confirmPassword: "",
-  // });
-
-  // const handleChange = (e) => {
-  //   // console.log(e.target.name);
-  //   // console.log(e.target.value);
-  //   setValue({ ...value, [e.target.name]: e.target.value });
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // console.log(value);
-  //   if (value.password !== value.confirmPassword) {
-  //     alert("password not match");
-  //   } else {
-  //     // alert("ok");
-  //     register(value)
-  //       .then((res) => {
-  //         console.log(res.data);
-  //         alert(res);
-  //       })
-  //       .catch((err) => {
-  //         // console.log(err.response.data);
-  //         alert(err.response.data);
-  //       });
-  //   }
-  // };
 
   const onFinish = (values) => {
     setLoading(true);
